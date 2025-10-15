@@ -1,4 +1,5 @@
 package bsu.rfe.java.group10.buryakov.lab3.varA1;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -32,20 +33,20 @@ public class MainFrame extends JFrame {
     private static final int WIDTH = 700;
     private static final int HEIGHT = 500;
     // Массив коэффициентов многочлена
-    private Double[] coefficients;
+    private final Double[] coefficients;
     // Объект диалогового окна для выбора файлов
     private JFileChooser fileChooser = null;
     // Элементы меню вынесены в поля данных класса, так как ими необходимо манипулировать из разных мест
-    private JMenuItem saveToTextMenuItem;
-    private JMenuItem saveToGraphicsMenuItem;
-    private JMenuItem searchValueMenuItem;
+    private final JMenuItem saveToTextMenuItem;
+    private final JMenuItem saveToGraphicsMenuItem;
+    private final JMenuItem searchValueMenuItem;
     // Поля ввода для считывания значений переменных
-    private JTextField textFieldFrom;
-    private JTextField textFieldTo;
-    private JTextField textFieldStep;
-    private Box hBoxResult;
+    private final JTextField textFieldFrom;
+    private final JTextField textFieldTo;
+    private final JTextField textFieldStep;
+    private final Box hBoxResult;
     // Визуализатор ячеек таблицы
-    private GornerTableCellRenderer renderer = new GornerTableCellRenderer();
+    private final GornerTableCellRenderer renderer = new GornerTableCellRenderer();
     // Модель данных с результатами вычислений
     private GornerTableModel data;
 
@@ -310,7 +311,7 @@ public class MainFrame extends JFrame {
                 if (i != coefficients.length - 1)
                     out.print(" + ");
             }
-            out.println("");
+            out.println(" ");
             out.println("Интервал от " + data.getFrom() + " до " + data.getTo() + " с шагом " + data.getStep());
             out.println("====================================================");
             // Записать в поток вывода значения в точках
