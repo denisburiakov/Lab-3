@@ -40,6 +40,8 @@ public class MainFrame extends JFrame {
     private final JMenuItem saveToTextMenuItem;
     private final JMenuItem saveToGraphicsMenuItem;
     private final JMenuItem searchValueMenuItem;
+    private final JMenuItem aboutProgramMenuItem;
+
     // Поля ввода для считывания значений переменных
     private final JTextField textFieldFrom;
     private final JTextField textFieldTo;
@@ -74,6 +76,10 @@ public class MainFrame extends JFrame {
         JMenu tableMenu = new JMenu("Таблица");
         // Добавить его в главное меню
         menuBar.add(tableMenu);
+        // Создать пункт меню "Справка"
+        JMenu spravkaMenu = new JMenu("Справка");
+        // Добавить его в главное меню
+        menuBar.add(spravkaMenu);
 
         // Создать новое "действие" по сохранению в текстовый файл
         Action saveToTextAction = new AbstractAction("Сохранить в текстовый файл") {
@@ -135,6 +141,18 @@ public class MainFrame extends JFrame {
         searchValueMenuItem = tableMenu.add(searchValueAction);
         // По умолчанию пункт меню является недоступным (данных ещѐ нет)
         searchValueMenuItem.setEnabled(false);
+
+        Action aboutProgramAction = new AbstractAction("О программе") {
+            public void actionPerformed(ActionEvent event) {
+                // Используйте MainFrame.this вместо создания нового JFrame
+                JOptionPane.showMessageDialog(MainFrame.this, // родительский компонент
+                        "Буряков Денис Олегович 10 группа \nGitHub: https://github.com/denisburiakov", // сообщение
+                        "О программе", // заголовок окна
+                        JOptionPane.INFORMATION_MESSAGE); // тип сообщения
+            }
+        };
+
+        aboutProgramMenuItem = spravkaMenu.add(aboutProgramAction);
 
         // Создать область с полями ввода для границ отрезка и шага
         // Создать подпись для ввода левой границы отрезка
