@@ -29,53 +29,69 @@ public class GornerTableModel extends AbstractTableModel {
     }
 
     public int getColumnCount() {
-        // В данной модели два столбца
-        return 2;
+        // Теперь три столбца
+        return 3;
     }
 
     public int getRowCount() {
-        // Вычислить количество точек между началом и концом отрезка исходя из шага табулирования
         return (int) Math.ceil((to - from) / step) + 1;
     }
 
     public Object getValueAt(int row, int col) {
-        // Вычислить значение X как НАЧАЛО_ОТРЕЗКА + ШАГ*НОМЕР_СТРОКИ
         double x = from + step * row;
 
         if (col == 0) {
-            // Если запрашивается значение 1-го столбца, то это X
+            // Первый столбец - значение X
             return x;
-        } else {
-            // Если запрашивается значение 2-го столбца, то это значение многочлена
+        } else if (col == 1) {
+            // Второй столбец - значение многочлена
             Double result = 0.0;
 
-            // Вычисление значения в точке по схеме Горнера
             if (coefficients.length > 0) {
                 result = coefficients[0];
                 for (int i = 1; i < coefficients.length; i++) {
                     result = result * x + coefficients[i];
                 }
             }
-
             return result;
+        } else {
+            // Третий столбец - больше ли нуля многочлен
+            Double result = 0.0;
+
+            if (coefficients.length > 0) {
+                result = coefficients[0];
+                for (int i = 1; i < coefficients.length; i++) {
+                    result = result * x + coefficients[i];
+                }
+            }
+            // Возвращаем Boolean значение: true если результат > 0, иначе false
+            return result > 0;
         }
     }
 
     public String getColumnName(int col) {
         switch (col) {
             case 0:
-                // Название 1-го столбца
                 return "Значение X";
             case 1:
-                // Название 2-го столбца
                 return "Значение многочлена";
+            case 2:
+                return "Больше нуля?";
             default:
                 return "";
         }
     }
 
     public Class<?> getColumnClass(int col) {
-        // И в 1-ом и во 2-ом столбце находятся значения типа Double
-        return Double.class;
+        switch (col) {
+            case 0:
+                return Double.class;
+            case 1:
+                return Double.class;
+            case 2:
+                return Boolean.class;
+            default:
+                return Object.class;
+        }
     }
 }

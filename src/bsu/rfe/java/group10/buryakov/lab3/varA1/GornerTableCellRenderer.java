@@ -14,43 +14,40 @@ import javax.swing.table.TableCellRenderer;
 public class GornerTableCellRenderer implements TableCellRenderer {
     private JPanel panel = new JPanel();
     private JLabel label = new JLabel();
-
-    // Ищем ячейки, строковое представление которых совпадает с needle (иголкой)
     private String needle = null;
     private DecimalFormat formatter = (DecimalFormat) NumberFormat.getInstance();
 
     public GornerTableCellRenderer() {
-        // Показывать только 5 знаков после запятой
         formatter.setMaximumFractionDigits(5);
-        // Не использовать группировку (т.е. не отделять тысячи ни запятыми, ни пробелами)
         formatter.setGroupingUsed(false);
-
-        // Установить в качестве разделителя дробной части точку, а не запятую
         DecimalFormatSymbols dottedDouble = formatter.getDecimalFormatSymbols();
         dottedDouble.setDecimalSeparator('.');
         formatter.setDecimalFormatSymbols(dottedDouble);
-
-        // Разместить надпись внутри панели
         panel.add(label);
-        // Установить выравнивание надписи по левому краю панели
         panel.setLayout(new FlowLayout(FlowLayout.LEFT));
     }
 
     public Component getTableCellRendererComponent(JTable table, Object value,
                                                    boolean isSelected, boolean hasFocus, int row, int col) {
 
-        // Преобразовать double в строку с помощью форматировщика
-        String formattedDouble = formatter.format(value);
-        // Установить текст надписи равным строковому представлению числа
-        label.setText(formattedDouble);
+        // Для разных типов данных разное форматирование
+        if (value instanceof Double) {
+            String formattedDouble = formatter.format(value);
+            label.setText(formattedDouble);
 
-        if (col == 1 && needle != null && needle.equals(formattedDouble)) {
-            // Номер столбца = 1 (т.е. второй столбец) + иголка не null +
-            // значение иголки совпадает со значением ячейки таблицы -
-            // окрасить задний фон панели в красный цвет
-            panel.setBackground(Color.RED);
+            // Подсветка только для второго столбца (значения многочлена)
+            if (col == 1 && needle != null && needle.equals(formattedDouble)) {
+                panel.setBackground(Color.RED);
+            } else {
+                panel.setBackground(Color.WHITE);
+            }
+        } else if (value instanceof Boolean) {
+            // Для булевых значений просто выводим "Да" или "Нет"
+            Boolean boolValue = (Boolean) value;
+            label.setText(boolValue ? "Да" : "Нет");
+            panel.setBackground(Color.WHITE);
         } else {
-            // Иначе - в обычный белый
+            label.setText(value.toString());
             panel.setBackground(Color.WHITE);
         }
 
