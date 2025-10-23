@@ -34,7 +34,6 @@ public class MainFrame extends JFrame {
     private static final int HEIGHT = 500;
     // Массив коэффициентов многочлена
     private final Double[] coefficients;
-    private Boolean less_than_zero;
     // Объект диалогового окна для выбора файлов
     private JFileChooser fileChooser = null;
     // Элементы меню вынесены в поля данных класса, так как ими необходимо манипулировать из разных мест
